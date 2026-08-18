@@ -110,9 +110,10 @@ flowchart LR
 
 ---
 
-## 🤖 Manual MCP Configuration
+## 🧩 Optional: Manual MCP Integration (Cursor, Windsurf, Claude Desktop)
 
-If you prefer to configure MCP manually or integrate with other IDEs, add the following to your `.mcp.json`:
+> **Note**: If you ran `holmes-kit init`, this configuration is **100% automated for you**.  
+> Use the manual configuration below only if you wish to integrate Holmes-Kit into standalone third-party MCP clients like Cursor, Windsurf, Claude Desktop, or VS Code:
 
 ```json
 {
