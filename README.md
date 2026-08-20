@@ -169,3 +169,8 @@ Holmes-Kit embeds native AST & Code Property Graph (D-CPG) analyzers to track ca
 ## 📜 License
 
 Distributed under the [MIT License](https://github.com/holmes-kit/holmes-kit/blob/main/LICENSE).
+
+
+<img width="1386" height="876" alt="• 3-The Mutt-Lans RTM Plpellne   Graph Canvas" src="https://github.com/user-attachments/assets/313a234b-d8d5-44b0-942d-dbdca8f8d0d3" />
+<img width="1377" height="872" alt="Pasted Graphic 1" src="https://github.com/user-attachments/assets/5f2c5a90-1721-4369-a75f-2c9df12dad69" />
+![Uploading Pasted Graphic 2.png…]()
