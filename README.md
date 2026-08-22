@@ -171,6 +171,13 @@ Holmes-Kit embeds native AST & Code Property Graph (D-CPG) analyzers to track ca
 Distributed under the [MIT License](https://github.com/holmes-kit/holmes-kit/blob/main/LICENSE).
 
 
+## How it works
+<img width="1024" height="1024" alt="FC9A3E7A-E37F-463A-99F3-0693E8D58DFC" src="https://github.com/user-attachments/assets/d7a47ea4-d540-4c5a-bf1f-959ae6b057d5" />
+<img width="1024" height="572" alt="174421B1-BB95-4F57-AA0A-13D7BB8C25E9" src="https://github.com/user-attachments/assets/78931a86-afdc-4441-820f-a01212fa3702" />
+<img width="1024" height="572" alt="4F291565-BEDF-43E8-8C7A-0758E1C9B4CB" src="https://github.com/user-attachments/assets/af9ec771-9bc3-4069-9f79-336bf7a671f0" />
+
+
+## Micro-RTM traceability
 <img width="1386" height="876" alt="• 3-The Mutt-Lans RTM Plpellne   Graph Canvas" src="https://github.com/user-attachments/assets/313a234b-d8d5-44b0-942d-dbdca8f8d0d3" />
 <img width="1377" height="872" alt="Pasted Graphic 1" src="https://github.com/user-attachments/assets/5f2c5a90-1721-4369-a75f-2c9df12dad69" />
 <img width="1380" height="829" alt="Pasted Graphic 2" src="https://github.com/user-attachments/assets/39373a6b-9a03-46e8-aa8a-7a26619c8be5" />
