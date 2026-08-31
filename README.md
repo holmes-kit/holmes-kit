@@ -117,6 +117,46 @@ npx holmes-kit doctor
 ```
 *If everything is green, your project is governed and ready for AI pair-programming!*
 
+### 4. Optional: Enable the Semantic Layer (Tier `local` / Tier `cloud`)
+
+Out of the box Holmes-Kit runs tier **`none`** — lexical + citation + graph search, **zero
+egress**. Two opt-in tiers raise recall on requests your vocabulary can't reach (measured on 305
+traceability cases — see the feature list above):
+
+**Tier `local` — no egress, no account.** Install the optional embedding runtime next to
+holmes-kit and the local model (`bge-m3`) is picked up automatically:
+```bash
+npm install --save-dev @xenova/transformers
+npx holmes-kit doctor        # → semantic tier: local (no egress)
+```
+
+**Tier `cloud` — highest recall, explicit consent (`gemini-embedding-001`).** Setting a key IS
+the consent act: with a key present, repository-derived text is sent to Google's embedding API.
+
+1. Get a Gemini API key (Google AI Studio → <https://aistudio.google.com/apikey>; the free tier
+   is enough to try it).
+2. Store it **outside your project tree** with the built-in command — the key rides **stdin,
+   never argv**, lands in `~/.holmes/credentials.json` with `0600` permissions, and no output
+   ever contains the value:
+   ```bash
+   npx holmes-kit semantic-key set        # hidden prompt on a TTY; or:  echo "$KEY" | npx holmes-kit semantic-key set
+   npx holmes-kit semantic-key status     # shows the key's SOURCE only, never the value
+   npx holmes-kit doctor                  # → semantic tier: cloud (egress: on)
+   ```
+   On macOS the key prefers the system keychain; elsewhere the `0600` file is the store.
+   Environment variables also work and take precedence (`HOLMES_SEMANTIC_API_KEY` dedicated, or
+   the ecosystem-compatible `GEMINI_API_KEY` / `GOOGLE_API_KEY`) — useful for CI. Prefer
+   `semantic-key set` on workstations: it keeps the key out of shell history, `.env` files, and
+   the repository.
+3. To revoke consent at any time:
+   ```bash
+   npx holmes-kit semantic-key unset      # clears the stored key; tier falls back to local/none
+   ```
+
+> 🔒 **Never** commit a key, pass it as a CLI argument, or put it in a file inside the project
+> tree. Holmes-Kit's credential chain has **no project-tree source by design**, and agents are
+> gated from setting keys on their own — consent stays a human act.
+
 ---
 
 ## 🔄 Daily Workflow (How It Works)
