@@ -193,11 +193,11 @@ Holmes-Kit embeds native AST & Code Property Graph (D-CPG) analyzers to track ca
 | **macOS** | Apple Silicon (arm64) / Intel (x64) | ✅ Tier 1 | macOS 12+ (Full hook enforcement) |
 | **Linux** | x86_64 / arm64 | ✅ Tier 1 | Ubuntu, Debian, Fedora, Arch, RHEL |
 | **Windows (WSL2)** | x86_64 | ✅ Tier 1 | WSL2 Ubuntu/Debian recommended |
-| **Windows Native** | x86_64 | ✅ Tier 1 | Windows 10/11 (Node.js 20+; prebuilt natives, no build tools needed in the common case). **Field-validated 2026-08-31** on a real user machine: registry install, natives (better-sqlite3 + 7 tree-sitter grammars), both OS gates, MCP handshake (30 tools), interactive init TUI, out-of-band approval channel (doctor 25 PASS; the 4 false FAILs it also showed were doctor's own win32 spawn bug, fixed in 0.3.2). See [ADR-015](.ax/decisions/ADR-015_platform-tier-is-decided-by-executed-verification.md) for tier criteria and residual risks (NTFS 8.3 names, reserved device names, 260-char paths; no Windows CI yet) |
+| **Windows Native** | x86_64 | ✅ Tier 1 | Windows 10/11 (Node.js 20+; prebuilt natives, no build tools needed in the common case). **Field-validated 2026-08-31** on a real user machine: registry install, natives (better-sqlite3 + 7 tree-sitter grammars), both OS gates, MCP handshake (30 tools), interactive init TUI, out-of-band approval channel (doctor 25 PASS; the 4 false FAILs it also showed were doctor's own win32 spawn bug, fixed in 0.3.2). See ADR-015 (platform tier is decided by executed verification — internal decision record) for tier criteria and residual risks (NTFS 8.3 names, reserved device names, 260-char paths; no Windows CI yet) |
 
 > **Runtime Requirement**: Node.js `>= 20.0.0` (LTS recommended)
 >
-> **How a tier is decided**: by the verification that actually executes, not by declaration. A platform is Tier 1 only while its gate verdicts are exercised by the suite; if that stops being true it is demoted and the demotion is recorded. See [ADR-015](.ax/decisions/ADR-015_platform-tier-is-decided-by-executed-verification.md).
+> **How a tier is decided**: by the verification that actually executes, not by declaration. A platform is Tier 1 only while its gate verdicts are exercised by the suite; if that stops being true it is demoted and the demotion is recorded. See ADR-015 (platform tier is decided by executed verification — internal decision record).
 
 ---
 
