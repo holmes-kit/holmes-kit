@@ -6,6 +6,13 @@
 
 > **"No Spec, No Code"** — Deterministic Agentic Software Engineering (ASE) harness with causal traceability.
 
+<!-- holmes-kit:attest:begin -->
+![traced files](.ax/badges/traced.svg)
+
+**386/386** source files (100%) trace to an approved spec · **629/680** approved A-SPECs (92.5%) are anchored from code.
+Measured at `173b99650442` (specs `sha256:215f84d4e9f4`) — reproduce with `holmes-kit attest --exclude dist-tools/,docs/goals/probes/,reference/`.
+<!-- holmes-kit:attest:end -->
+
 ---
 
 ## 🕵️ Philosophy & Vision: Beyond Code Generation
@@ -16,6 +23,7 @@
 
 ### 🛡️ Currently Supported Features (Production Features)
 
+- 📏 **Say how much of the repository is governed — as a number, not a label** *(new in 0.27.0)*: `holmes-kit attest` reports how many scanned source files are anchored to an **approved** spec, beside how many approved A-SPECs are anchored from code, and says where that is true (commit, plus a digest of the approved specs) so anyone can reproduce it. No new judgement: the scanner's files, the anchors, the existing link census. A per-file "generated under holmes-kit" header was declined — it is a claim that survives an ungoverned edit, and line 1 already carries the anchor a gate verifies. `--exclude a,b` names vendored trees at a path boundary and is echoed in every output; what cannot be measured is `n/a`, never `0%`; `100` appears only when every file is traced. `--badge` writes a self-contained local SVG, and `--readme` rewrites **only** the region between the `holmes-kit:attest` markers — a README without them is never touched, and a half marker is refused. A statement, not a gate: the numbers never change the exit code.
 - 🤝 **The collision plan runs under one approval** *(new in 0.26.2)*: 0.26.1 saw a spec number another machine took and printed the plan; carrying it out was still one `spec_renumber` call per family, and that tool's apply asks for no approval although it rewrites approved documents and source anchors. `spec_reconcile` `plan` is read-only and returns the moves, what each rewrites, the re-seal order, the prose it will **not** touch, and a `target` derived from the plan's content alone. `apply` rebuilds the plan inside the store hold, refuses `plan-changed` if a fetch moved it since you looked, demands one `config-write` approval bound to that `target`, and runs every move through the path `spec_renumber` already uses. Forged `moves` are never read — what runs is the recomputed plan. It never seals: `spec_approve` stays the only sealer. No remote is an answer, not a refusal.
 - 🔢 **A spec number another machine took is seen before the merge** *(new in 0.26.1)*: two checkouts allocated `REQ-694` thirteen minutes apart, neither could see the other, and it surfaced only as an add/add conflict after the push was refused — a rebuilt slice and five out-of-band approvals. `doctor --target` now reads each remote-tracking ref **as last fetched** (no network) and judges only the documents each side *added* since they parted, so a spec one side merely edited is divergence, not an alarm. On a collision the advice is the plan: `Before merging — move 901 → 903: spec_renumber(oldBase=901, newBase=903); then re-seal`. The side that moves is the one not published yet, the destination is free on both sides, and "published" means equal content — never path, because a spec's path is its number.
 - 🔁 **The cycle ratchet finally speaks — and takes a named exception** *(new in 0.26.1)*: since the commit that introduced it, the Stop hook computed the code cycles and called the verdict without them, so the `ART-2` line had never been printed; every unit test passed because each handed the evidence in directly. It is emitted now, bounded (five cycles, five members each, the rest counted — one vendored cycle here has 46 members), and `ax.config.json` gains `architecture.cycleIgnore`: prefixes for trees that are not yours to fix. A cycle is excepted only when every member lies under one, `reference` does not pardon `reference-impl/`, a broken config excepts nothing, and excepted cycles stay counted in the ledger.
