@@ -11,8 +11,8 @@
 <!-- holmes-kit:attest:begin -->
 ![traced files](.ax/badges/traced.svg)
 
-**565/565** source files (100%) trace to an approved spec · **1263/1370** approved A-SPECs (92.1%) are anchored from code.
-Measured at `c4a016695ba7` (specs `sha256:ac5e4f7df00f`) — reproduce with `holmes-kit attest --exclude docs/goals/probes/`.
+**565/565** source files (100%) trace to an approved spec · **1272/1379** approved A-SPECs (92.2%) are anchored from code.
+Measured at `774b6d166839` (specs `sha256:dcdcb2217da0`) — reproduce with `holmes-kit attest --exclude docs/goals/probes/`.
 <!-- holmes-kit:attest:end -->
 
 ### 0.40.x push evidence: the supported surface
@@ -20,7 +20,7 @@ Measured at `c4a016695ba7` (specs `sha256:ac5e4f7df00f`) — reproduce with `hol
 The pre-push gate accepts a full `test_run` as evidence only where holmes can check the run afterwards without changing your runner configuration. Outside that surface the push is refused as `environment`, with one message: "이 구성은 0.40.x가 증빙하지 않습니다 — 0.41 / 오너 결정". General support is planned for 0.41.
 
 **A full run tests the commit, not your work tree.**
-- It checks HEAD out as a temporary git worktree **outside the repository**, in `<os tmp>/holmes-headwt-<user>/<repository key>/<id>/`, made with no git hooks and no write to your git configuration. It links your gitignored `node_modules`, runs `ax.config.json` `testRun.prepare` there if you declare one (for example `["npm", "run", "build"]`; nothing is guessed, and a package-manager install is refused because `node_modules` is your work tree's), runs the suite within the run's time budget, and removes the worktree.
+- It checks HEAD out as a temporary git worktree **outside the repository**, in `<os tmp>/holmes-headwt-<user>/<repository key>/<id>/`, made with no git hooks and no write to your git configuration. It links your gitignored `node_modules`, runs `ax.config.json` `testRun.prepare` there if you declare one (for example `["npm", "run", "build"]`; nothing is guessed, and a package-manager install is refused because `node_modules` is your work tree's; `[]` or `null` declares none, and any other malformed value ends the run with the reason *(0.41.1)*), runs the suite within the run's time budget, and removes the worktree. The prepare and the tests are told that worktree as `CLAUDE_PROJECT_DIR` *(0.41.1)*.
 - holmes removes only a worktree git lists at that exact path, through `git worktree remove`; it never deletes a directory itself and never runs `git worktree prune`. A leftover of a run whose process is gone is removed by the next run.
 - Untracked, ignored, modified, assume-unchanged and skip-worktree files never reach the run, so a red commit cannot pass on a green work tree. Nothing is written inside your repository, and nothing has to be added to `.gitignore`.
 - **The run must read only HEAD, judged by what it loaded.**
@@ -413,7 +413,7 @@ flowchart LR
 | `holmes-kit runtime-binding setup --workspace <root> --package <built-package> --release-package <release-install> --dry-run` | Preview explicit development/release routing; omit `--dry-run` only after reviewing the plan and satisfying its approval request |
 | `holmes-kit runtime-binding status --workspace <root>` | Inspect selected package, build, spec store and wiring conflicts, and whether this selection's PreToolUse gate was observed running (`activation`); an observation is evidence the hook ran, not a guarantee every call is judged |
 | `holmes-kit doctor --target <root> --registry <bindings.json>` | Diagnose the same operator registry used by custom routing installations |
-| `holmes-kit ledger witness` | Vouch for this repository's provenance chain as it is — a person decides it in the session's approval form, which compares the chain with the pushed one and lists the rows to recognise *(new in 0.41)* |
+| `holmes-kit ledger witness` | Vouch for this repository's provenance chain as it is — a person decides it in the session's approval form, which leads with the witness's verdict, compares the chain with the pushed one as the local ref names it, and lists the rows to recognise from row 0 *(new in 0.41; form order 0.41.1)* |
 | `holmes-kit ledger rechain [--dry-run]` | Re-chain forked ledger files against the committed mainline; the rewrite applies only to a plan a person approved (`--dry-run` is free) |
 | `holmes-kit autonomy status` | Show the current autonomous-approval posture (project default + session envelope) |
 | `holmes-kit autonomy on --for 2h` | Self-drive low-risk specs for this session only (expiring; needs a TTY or `HOLMES_APPROVAL`) |
