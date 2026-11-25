@@ -11,8 +11,8 @@
 <!-- holmes-kit:attest:begin -->
 ![traced files](.ax/badges/traced.svg)
 
-**607/607** source files (100%) trace to an approved spec · **1414/1538** approved A-SPECs (91.9%) are anchored from code.
-Measured at `fed1d9c97574+dirty` (specs `sha256:2268e44bdf61`) — reproduce with `holmes-kit attest --exclude docs/goals/probes/`.
+**609/609** source files (100%) trace to an approved spec · **1427/1559** approved A-SPECs (91.5%) are anchored from code.
+Measured at `3cf425cd7985+dirty` (specs `sha256:7421077ac16f`) — reproduce with `holmes-kit attest --exclude docs/goals/probes/`.
 <!-- holmes-kit:attest:end -->
 
 ### 0.40.x push evidence: the supported surface
@@ -72,6 +72,12 @@ The pre-push gate accepts a full `test_run` as evidence only where holmes can ch
 ---
 
 ### 🛡️ Currently Supported Features (Production Features)
+- **Stop judges the branch you are on; push judges every branch** *(new in 0.41.6)*: Stop's spec seam lists only the spec commits HEAD reaches that no recorded tip explains, so a spec commit granted in another worktree, or one on a fetched branch or tag, no longer raises ART-5 here. The push judgement still reads every branch and tag, so such a commit is judged when it leaves. A baseline advances HEAD's tip and keeps the others (at most 256; past that, tips another tip reaches go first). Tips are recorded as commit ids (an annotated tag is peeled).
+- **`test_run` says what it recorded** *(new in 0.41.6)*: a full run that is not push evidence (red, stopped at its budget) answers `scopedEvidenceRecorded: false` and `attemptRecorded { judged, reason }` instead of `scopedEvidenceRecorded: true`; what it records and voids is unchanged. A `test_run` given a `head` refuses before it runs or records anything when the work tree differs from that head in a file of the range.
+- **`node:test` files run under node's own runner** *(new in 0.41.6)*: `test_run` detects `node:test` files, runs them with `node --test` and judges them by structure, not as jest; the evidence names the runner `node-test`.
+- **A principle-7 spec named with Windows separators is a person's seal** *(new in 0.41.6 — gate fix)*: a Files to Touch that writes a gate file as `src\holmes\hooks\stop.ts`, or names `src`, now puts the spec in the category a person seals; before, a full profile could seal it alone. The autonomous principle-7 seal after two clean reviews is built but ships **off** in 0.41.6 (`P7_AUTONOMOUS_SEAL_ENABLED = false`): a hard-link path is still open, so a person seals those specs as before.
+- **A deletion naming many absent entries next to wiring is refused** *(new in 0.41.6 — gate fix)*: a deletion judgement reads each parent directory once and looks up at most 512 alias candidates; a command over that budget is refused instead of being judged slowly. A directory that no longer exists counts as absent.
+- **Under auto mode, a sealed spec is staged without a person** *(new in 0.41.6)*: with autonomous approval on and no full profile, staging a sealed spec follows the same machine conditions as under a full profile. A spec that changes the owner ceiling or the decision core still goes to a person's form.
 - **Nested Windows shells are read, or refused when they cannot be** *(new in 0.41.5 — gate fix, upgrade recommended)*: text handed to `cmd`, PowerShell or `wsl` (`cmd //c`, `start`, stdin, `Start-Process`, `wsl sh -c`) is judged as the shell it runs in, with 8.3 short names and `\\?\` spellings resolved to the protected file they name. What the gate cannot model there — cmd grammar, stdin, a run-time link, a program named by a variable, an interpreter under a program the gate does not read, an unknown copy switch — is refused as unjudgeable, and a shell write to a UNC or device path is refused. The gate is not a sandbox: where execution must be isolated, use the operating system's.
 - **Stop finishes inside half of its harness's limit** *(new in 0.41.5)*: the budget is 30 s on Claude Code and Antigravity and 37.5 s on Codex. Judgement always runs; an observability stage that would cross the budget is skipped with a `not judged: budget` warning, and the next Stop runs it first. A cold scan cache is built in the background.
 - **The spec seam judges past 200 new commits** *(new in 0.41.5)*: up to 5,000 in one `git log` pass, so a large clone no longer needs a person to re-baseline it. A fresh clone trusts its fetched merge-base, and forging a remote-tracking ref is refused.
